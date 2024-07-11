@@ -1,0 +1,13 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head> 
+    <title>Melodic Phrase Suggestor</title> 
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+    <p th:text="|Generated ${measure_count} measures:|" />
+    <div th:each="n : ${notes}">
+        <span th:text="|${n.note} ${n.duration}|" />
+    </div>
+</body>
+</html>
