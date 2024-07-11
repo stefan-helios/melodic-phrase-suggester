@@ -1,6 +1,9 @@
-package main.java.com.wert.mpsweb.mps;
+package com.wert.mpsweb.mps;
 
 public record Note(int scaleDegree, int duration) {
+    // Unlike NoteModel, since we may need to modify scaleDegree
+    // before storing it, we use the usual syntax for class
+    // constructors (i.e. specifying the parameters)
     public Note(int scaleDegree, int duration) {
          // Normalize degree
         while (scaleDegree < 1) {
@@ -13,7 +16,7 @@ public record Note(int scaleDegree, int duration) {
         this.scaleDegree = scaleDegree;
 
         // Validate duration
-        if (duration < 1) throw new IllegalArgumentException("Duration must be greater than zero");
+        if (duration < 1 || duration > 16) throw new IllegalArgumentException("Duration must be greater than zero");
         this.duration = duration;
     }
 
@@ -59,6 +62,8 @@ public record Note(int scaleDegree, int duration) {
             "h.is",
             "w",
         };
+        // Because duration was already bounds-checked in the constructor and is read-only,
+        // no need to bounds-check again here
         return toNoteOctave() + durations[duration-1];
     }
 }

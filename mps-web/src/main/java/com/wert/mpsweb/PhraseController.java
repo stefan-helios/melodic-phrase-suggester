@@ -8,8 +8,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import main.java.com.wert.mpsweb.mps.Phrase;
+import com.wert.mpsweb.mps.Phrase;
 
+// Marks this as a class that contains implementations for endpoints
 @RestController
 public class PhraseController {
 
@@ -17,12 +18,15 @@ public class PhraseController {
 
 	private static final String template = "Hello, %s!";
 
+	// Implements this URL (e.g. http://localhost:8080/hello) when running locally
 	@GetMapping("/hello")
 	public String hello(@RequestParam(value = "name", defaultValue = "World") String name) {
 		logger.info("testing hello");
 		return String.format(template, name);
 	}
 
+	// Implements this URL (e.g. http://localhost:8080/generate?measures=10) when running locally
+	// Number of measures is an optional query parameter, defaulting to 16
 	@GetMapping("/generate")
 	public NoteModel[] generate(@RequestParam(value = "measures", defaultValue = "16") String measures) {
 		logger.info("generate called, measures = " + measures);
