@@ -4,8 +4,69 @@
     <title>Melodic Phrase Suggestor</title> 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
+
+<script src="http://unpkg.com/tone"></script>
+
+<script th:inline="javascript">
+    // Get notes from model object - more magic Thymeleaf syntax
+    let notes = [[${notes}]];
+    // Testing that the template worked
+    //notes.forEach((value, index, array) => console.log(`${value.note} ${value.duration}`));
+
+    // From Tone.js docs: Tempo and time signature relative time in the form BARS:QUARTERS:SIXTEENTHS.
+    function toToneTime(sixteenthNotes) {
+        return `0:0:${sixteenthNotes}`;
+    }
+
+    let playing = false;
+    const synth = new Tone.Synth().toDestination();
+    Tone.Transport.bpm.value = 90;
+
+    let totalUnits = 0;
+    notes.forEach(value => {
+        value.start = toToneTime(totalUnits);
+        totalUnits += value.duration;
+    })
+    
+    const partNotes = notes.map(function(n) {
+        return {
+            note: n.note,
+            duration: n.duration,
+            time: n.start,
+        };
+    });
+    
+    const part = new Tone.Part((time, value) => {
+        synth.triggerAttackRelease(value.note, toToneTime(value.duration), time);
+    }, partNotes).start(0);
+
+    const totalDuration = Tone.Time(toToneTime(totalUnits)).toSeconds();
+
+    window.addEventListener('DOMContentLoaded', function () {
+        // attach a click listener to a play button
+        // bad code, just looks for the first button on the page
+        let button = document.querySelector("button");
+        button?.addEventListener("click", async () => {
+            button.disabled = true;
+
+            console.log('clicked');
+            await Tone.start();
+
+            Tone.Transport.start();
+
+            setTimeout(() => {
+                button.disabled = false;
+                Tone.Transport.stop();
+                console.log('playback ended');
+            }, totalDuration * 1000 + 500);
+        });
+    });
+
+</script>
+
 <body>
     <p th:text="|Generated ${measure_count} measures:|" />
+    <button>Play</button>
     <div th:each="n : ${notes}">
         <span th:text="|${n.note} ${n.duration}|" />
     </div>
