@@ -11,10 +11,10 @@ import org.junit.jupiter.params.provider.MethodSource;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-
-
 import com.wert.mpsweb.mps.Note;
 
+// This attribute causes some extra spring-specific setup for unit testing to simulate
+// the environment of a web app, but I'm not using any of that yet
 @SpringBootTest
 class MpswebApplicationTests {
 
