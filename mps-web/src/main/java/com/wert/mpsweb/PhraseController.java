@@ -1,14 +1,15 @@
 package com.wert.mpsweb;
 
-import java.util.concurrent.atomic.AtomicLong;
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.wert.mpsweb.mps.Phrase;
+
+import com.wert.mpsweb.NoteModel;
 
 // Marks this as a class that contains implementations for endpoints
 @RestController
