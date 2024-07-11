@@ -20,7 +20,7 @@
 
     let playing = false;
     const synth = new Tone.Synth().toDestination();
-    Tone.Transport.bpm.value = 90;
+    Tone.Transport.bpm.value = 70;
 
     let totalUnits = 0;
     notes.forEach(value => {
@@ -58,7 +58,7 @@
                 button.disabled = false;
                 Tone.Transport.stop();
                 console.log('playback ended');
-            }, totalDuration * 1000 + 500);
+            }, totalDuration * 1000 + 1000);
         });
     });
 
