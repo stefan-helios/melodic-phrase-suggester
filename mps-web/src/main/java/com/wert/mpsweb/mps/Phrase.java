@@ -45,7 +45,7 @@ public class Phrase {
         // last measure, cut the last note shorter accordingly
         if (durationSoFar > unitsOfDuration) {
             int excess = durationSoFar - unitsOfDuration;
-            var lastNote = notes.removeLast();
+            var lastNote = notes.remove(notes.size() - 1);
             notes.add(new Note(lastNote.scaleDegree(), lastNote.duration() - excess));
         }
 
